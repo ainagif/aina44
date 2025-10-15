@@ -53,3 +53,30 @@ try:
 
 except Exception as e:
     st.error(f"An error occurred while loading or processing data: {e}")
+
+import streamlit as st
+import matplotlib.pyplot as plt
+import pandas as pd
+# Assuming 'arts_df' and the 'Arts Program' column are already loaded/defined
+
+# 1. Get the value counts
+# Replace 'arts_df' with your actual DataFrame variable if different
+# Example placeholder for 'arts_df' - YOU MUST replace this with your actual data loading
+data = {'Arts Program': ['Music', 'Visual Arts', 'Theater', 'Music', 'Visual Arts', 'Dance', 'Music', 'Theater']}
+arts_df = pd.DataFrame(data) 
+
+program_counts = arts_df['Arts Program'].value_counts()
+
+# 2. Create the matplotlib figure
+fig, ax = plt.subplots(figsize=(10, 6)) # Create figure and axes explicitly
+program_counts.plot(kind='bar', ax=ax) # Plot onto the defined axes
+
+# 3. Add labels and titles using the axes object
+ax.set_title('Distribution of Arts Programs')
+ax.set_xlabel('Arts Program')
+ax.set_ylabel('Count')
+plt.xticks(rotation=45, ha='right') # Rotate labels for readability
+plt.tight_layout() # Adjust layout to prevent labels overlapping
+
+# 4. Display the figure in Streamlit
+st.pyplot(fig)
