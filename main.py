@@ -161,3 +161,41 @@ plt.tight_layout()
 
 # 3. Display the plot using Streamlit
 st.pyplot(fig)
+
+import streamlit as st
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import numpy as np # Used for dummy data generation
+
+# --- Dummy Data Setup (Replace this with your actual arts_df loading) ---
+# This simulates your DataFrame with the required columns
+np.random.seed(42)
+data = {
+    'S.S.C (GPA)': np.random.uniform(3.0, 5.0, 100),
+    'H.S.C (GPA)': np.random.uniform(3.5, 5.0, 100)
+}
+# Introduce a slight correlation
+data['H.S.C (GPA)'] = data['H.S.C (GPA)'] + 0.5 * (data['S.S.C (GPA)'] - 4.0)
+arts_df = pd.DataFrame(data)
+# ----------------------------------------------------------------------
+
+st.title('GPA Relationship Analysis')
+st.subheader('S.S.C (GPA) vs. H.S.C (GPA)')
+
+# 1. Create the Matplotlib plot using subplots()
+# This explicitly creates a figure (fig) and axes (ax)
+fig, ax = plt.subplots(figsize=(10, 6))
+
+# 2. Create the scatter plot with a regression line using Seaborn
+# We pass the axes object 'ax' to the sns.regplot function
+sns.regplot(x='S.S.C (GPA)', y='H.S.C (GPA)', data=arts_df, ax=ax)
+
+# 3. Set title and labels using the axes object
+ax.set_title('Relationship between S.S.C (GPA) and H.S.C (GPA)')
+ax.set_xlabel('S.S.C (GPA)')
+ax.set_ylabel('H.S.C (GPA)')
+ax.grid(True)
+
+# 4. Display the plot using Streamlit's pyplot function
+st.pyplot(fig)
