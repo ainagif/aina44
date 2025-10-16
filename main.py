@@ -119,3 +119,45 @@ ax.grid(True)
 
 # 4. Display the plot using Streamlit's pyplot function
 st.pyplot(fig)
+
+import streamlit as st
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns # Keep seaborn import, though it's not strictly used for the pandas/matplotlib plot style here
+
+# --- Dummy Data Setup (Replace this with your actual arts_df loading) ---
+# This part simulates your DataFrame with the required columns
+data = {
+    'Bachelor Academic Year in EU': ['2020/2021', '2021/2022', '2020/2021', '2019/2020', '2021/2022', '2022/2023', '2020/2021', '2022/2023', '2021/2022', '2019/2020'],
+    'Gender': ['Female', 'Male', 'Female', 'Male', 'Female', 'Female', 'Male', 'Female', 'Male', 'Female']
+}
+arts_df = pd.DataFrame(data)
+# ----------------------------------------------------------------------
+
+
+st.title('Gender Distribution by Academic Year')
+
+# 1. Create a cross-tabulation of Gender and Bachelor Academic Year
+gender_year_counts = pd.crosstab(arts_df['Bachelor Academic Year in EU'], arts_df['Gender'])
+
+# 2. Create the Matplotlib plot using subplots()
+# This explicitly creates a figure (fig) and axes (ax)
+fig, ax = plt.subplots(figsize=(10, 6))
+
+# Plot the grouped bar chart onto the axes (ax)
+# Use stacked=False for grouped bars
+gender_year_counts.plot(kind='bar', stacked=False, ax=ax)
+
+# Set title and labels using the axes object (ax)
+ax.set_title('Distribution of Gender by Bachelor Academic Year in Arts Faculty')
+ax.set_xlabel('Bachelor Academic Year in EU')
+ax.set_ylabel('Count')
+
+# Apply rotation to the x-axis labels
+plt.xticks(rotation=45, ha='right')
+
+# Adjust layout to prevent labels from being cut off
+plt.tight_layout()
+
+# 3. Display the plot using Streamlit
+st.pyplot(fig)
