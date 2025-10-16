@@ -21,6 +21,44 @@ try:
     arts_df = pd.read_csv(csv_url)
     st.success("Data loaded successfully!")
 
+    import streamlit as st
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np # Used here to create a dummy DataFrame for the example
+
+# --- Dummy Data Creation (Replace this with your actual DataFrame loading) ---
+# This part simulates loading your 'arts_df' with a 'Timestamp' column
+start_date = pd.to_datetime('2023-01-01')
+end_date = pd.to_datetime('2023-03-31')
+date_range = pd.date_range(start=start_date, end=end_date, periods=1000)
+arts_df = pd.DataFrame({'Timestamp': date_range})
+# ----------------------------------------------------------------------------
+
+
+st.title('Response Count Analysis')
+
+# 1. Convert 'Timestamp' to datetime objects (Good practice, even if data is already datetime)
+arts_df['Timestamp'] = pd.to_datetime(arts_df['Timestamp'])
+
+# 2. Set 'Timestamp' as index and resample to count responses per day
+daily_counts = arts_df.set_index('Timestamp').resample('D').size()
+
+# 3. Create the Matplotlib plot
+# Use 'plt.figure()' to create a fresh figure, which is recommended for Streamlit
+fig, ax = plt.subplots(figsize=(12, 6))
+
+# Plot the daily counts onto the figure's axes (ax)
+daily_counts.plot(kind='line', ax=ax)
+
+# Set title and labels using the axes object
+ax.set_title('Number of Responses Over Time (Daily)')
+ax.set_xlabel('Date')
+ax.set_ylabel('Number of Responses')
+ax.grid(True)
+
+# 4. Display the plot using Streamlit's pyplot function
+st.pyplot(fig)
+
     # Display the head of the DataFrame in Streamlit
     st.subheader("Data Preview (First 5 Rows)")
     st.dataframe(arts_df.head())
