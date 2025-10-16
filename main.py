@@ -199,3 +199,45 @@ ax.grid(True)
 
 # 4. Display the plot using Streamlit's pyplot function
 st.pyplot(fig)
+
+import streamlit as st
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns # Included for completeness, though not strictly required for this plot
+
+# --- Dummy Data Setup (Replace this with your actual df loading) ---
+# This simulates your DataFrame with the required columns
+data = {
+    'Faculty': ['Arts', 'Science', 'Commerce', 'Arts', 'Science', 'Commerce', 'Arts', 'Science', 'Arts', 'Commerce'],
+    'Did you ever attend a Coaching center?': ['Yes', 'No', 'Yes', 'No', 'Yes', 'Yes', 'No', 'No', 'Yes', 'No']
+}
+df = pd.DataFrame(data)
+# ----------------------------------------------------------------------
+
+
+st.title('Coaching Center Attendance Analysis')
+
+# 1. Create a cross-tabulation of Faculty and Coaching Center attendance
+faculty_coaching_counts = pd.crosstab(df['Faculty'], df['Did you ever attend a Coaching center?'])
+
+# 2. Create the Matplotlib plot using subplots()
+# This explicitly creates a figure (fig) and axes (ax)
+fig, ax = plt.subplots(figsize=(10, 6))
+
+# Plot the grouped bar chart onto the axes (ax)
+# Use stacked=False for grouped bars
+faculty_coaching_counts.plot(kind='bar', stacked=False, ax=ax)
+
+# 3. Set title and labels using the axes object (ax)
+ax.set_title('Distribution of Coaching Center Attendance by Faculty')
+ax.set_xlabel('Faculty')
+ax.set_ylabel('Count')
+
+# Apply rotation to the x-axis labels
+plt.xticks(rotation=45, ha='right')
+
+# Adjust layout to prevent labels from being cut off
+plt.tight_layout()
+
+# 4. Display the plot using Streamlit
+st.pyplot(fig)
