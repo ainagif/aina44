@@ -82,7 +82,7 @@ plt.tight_layout() # Adjust layout to prevent labels overlapping
 # 4. Display the figure in Streamlit
 st.pyplot(fig)
 
-    import streamlit as st
+import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np # Used here to create a dummy DataFrame for the example
